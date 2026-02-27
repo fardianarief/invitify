@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pilihan Tema — Invitify</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #faf6f1; --warm: #f0e8dc; --gold: #c9a96e;
+    --gold-light: #e8d5b0; --dark: #1a1410; --brown: #5c3d2e;
+    --text: #3a2d25; --gray: #8a7a72;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--text); }
+
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    padding: 1.2rem 4rem;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(250,246,241,0.95); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,169,110,0.2);
+  }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 600; color: var(--brown); }
+  .nav-logo span { color: var(--gold); }
+  .nav-back { text-decoration: none; color: var(--gold); font-size: 0.85rem; letter-spacing: 0.08em; }
+
+  .page-header {
+    padding: 10rem 4rem 4rem;
+    background: linear-gradient(to bottom, var(--warm), var(--cream));
+    text-align: center;
+  }
+  .page-header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem; font-weight: 300; color: var(--dark);
+  }
+  .page-header p { color: var(--gray); margin-top: 1rem; font-size: 1rem; }
+
+  .themes-container { padding: 4rem; }
+  .theme-section { margin-bottom: 5rem; }
+  .theme-section-header {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    margin-bottom: 2rem; padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(201,169,110,0.2);
+  }
+  .ts-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; color: var(--dark);
+  }
+  .ts-badge {
+    font-size: 0.72rem; padding: 0.3rem 0.8rem;
+    border: 1px solid var(--gold); color: var(--gold);
+    border-radius: 20px; letter-spacing: 0.1em; text-transform: uppercase;
+  }
+
+  /* THEME MOCKUP CARDS */
+  .theme-demo {
+    display: grid; grid-template-columns: 1.4fr 1fr; gap: 3rem;
+    align-items: start;
+  }
+  .mockup-frame {
+    border-radius: 12px; overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+    border: 1px solid rgba(0,0,0,0.08);
+    position: relative;
+  }
+  .mockup-bar {
+    background: #e8e8e8; padding: 0.6rem 1rem;
+    display: flex; gap: 0.4rem; align-items: center;
+  }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-r { background: #ff5f57; }
+  .dot-y { background: #febc2e; }
+  .dot-g { background: #28c840; }
+  .mockup-content { min-height: 380px; position: relative; overflow: hidden; }
+
+  /* ELEGANT ROSE */
+  .theme-rose { background: linear-gradient(160deg, #fdf0f0 0%, #f9e0e0 100%); }
+  .theme-rose .mock-cover {
+    min-height: 220px;
+    background: linear-gradient(135deg, #f7d0d0, #e8a8a8);
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; color: #8b3a3a; position: relative;
+    overflow: hidden;
+  }
+  .mock-rose-deco { font-size: 3.5rem; margin-bottom: 0.5rem; }
+  .mock-couple {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; font-style: italic;
+    color: #7a2020; text-align: center;
+  }
+  .mock-and { font-size: 0.9rem; display: block; color: #b05050; margin: 0.2rem 0; }
+  .mock-date { font-size: 0.7rem; color: #c06060; margin-top: 0.5rem; letter-spacing: 0.2em; }
+  .mock-body { padding: 1rem 1.5rem; }
+  .mock-info { display: flex; gap: 1rem; margin-bottom: 0.8rem; }
+  .mock-info-box {
+    flex: 1; background: white; border-radius: 6px;
+    padding: 0.7rem; text-align: center;
+    border: 1px solid #f0c0c0;
+  }
+  .mock-info-icon { font-size: 1rem; }
+  .mock-info-label { font-size: 0.55rem; color: #c07070; margin-top: 0.2rem; }
+
+  /* GARDEN GREEN */
+  .theme-green { background: linear-gradient(160deg, #f0f8f0, #e0f0dc); }
+  .theme-green .mock-cover {
+    min-height: 220px;
+    background: linear-gradient(135deg, #c8e8b8, #98d888);
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; color: #2a5c1e; position: relative;
+  }
+  .theme-green .mock-couple { color: #1a4012; }
+  .theme-green .mock-and { color: #3a7030; }
+  .theme-green .mock-date { color: #4a8040; }
+
+  /* ROYAL GOLD */
+  .theme-gold-bg { background: #100e0a; }
+  .theme-gold-bg .mock-cover {
+    min-height: 220px;
+    background: linear-gradient(135deg, #1a1410, #2d2218);
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; border-bottom: 1px solid rgba(201,169,110,0.3);
+  }
+  .theme-gold-bg .mock-couple { color: var(--gold-light); }
+  .theme-gold-bg .mock-and { color: var(--gold); }
+  .theme-gold-bg .mock-date { color: rgba(201,169,110,0.7); }
+  .theme-gold-bg .mock-body { background: #100e0a; }
+  .theme-gold-bg .mock-info-box { background: #1a1410; border-color: rgba(201,169,110,0.2); }
+  .theme-gold-bg .mock-info-label { color: var(--gold); }
+
+  /* MINIMALIST WHITE */
+  .theme-minimal { background: #fafafa; }
+  .theme-minimal .mock-cover {
+    min-height: 220px;
+    background: white;
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; border-bottom: 1px solid #ebebeb;
+  }
+  .theme-minimal .mock-couple { color: #1a1a1a; font-weight: 300; }
+  .theme-minimal .mock-and { color: #888; }
+  .theme-minimal .mock-date { color: #aaa; }
+  .theme-minimal .mock-info-box { border-color: #ebebeb; }
+  .theme-minimal .mock-info-label { color: #999; }
+
+  /* RUSTIC WOOD */
+  .theme-rustic { background: #3d2410; }
+  .theme-rustic .mock-cover {
+    min-height: 220px;
+    background: linear-gradient(135deg, #4a2e18, #6b3d20);
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center;
+  }
+  .theme-rustic .mock-couple { color: #f0d8b0; }
+  .theme-rustic .mock-and { color: #c9a96e; }
+  .theme-rustic .mock-date { color: rgba(240,216,176,0.7); }
+  .theme-rustic .mock-body { background: #3d2410; }
+  .theme-rustic .mock-info-box { background: #4a2e18; border-color: rgba(201,169,110,0.2); }
+  .theme-rustic .mock-info-label { color: #c9a96e; }
+
+  /* THEME DETAILS */
+  .theme-details h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem; color: var(--dark); margin-bottom: 0.5rem;
+  }
+  .theme-tagline { color: var(--gray); font-size: 0.9rem; margin-bottom: 1.5rem; font-style: italic; }
+  .theme-features-list { list-style: none; margin-bottom: 2rem; }
+  .tfl-item {
+    padding: 0.6rem 0; border-bottom: 1px solid var(--warm);
+    font-size: 0.85rem; display: flex; gap: 0.7rem;
+  }
+  .tfl-check { color: var(--gold); }
+  .theme-packages { display: flex; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap; }
+  .tp-badge {
+    padding: 0.35rem 0.9rem; border-radius: 20px;
+    font-size: 0.72rem; letter-spacing: 0.05em;
+    border: 1px solid var(--warm); color: var(--gray);
+  }
+  .tp-badge.active { background: var(--gold); color: white; border-color: var(--gold); }
+  .order-btn {
+    display: inline-block; padding: 0.9rem 2rem;
+    background: var(--gold); color: white; text-decoration: none;
+    font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase;
+    border-radius: 2px; transition: background 0.3s; border: none; cursor: pointer;
+    font-family: 'Jost', sans-serif;
+  }
+  .order-btn:hover { background: var(--brown); }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .page-header { padding: 8rem 1.5rem 3rem; }
+    .themes-container { padding: 2rem 1.5rem; }
+    .theme-demo { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-logo">Inviti<span>fy</span></div>
+  <a href="index.html" class="nav-back">← Kembali ke Beranda</a>
+</nav>
+
+<div class="page-header">
+  <h1>Pilihan <em style="font-style:italic; color:var(--gold)">Tema</em></h1>
+  <p>Pilih tema yang mencerminkan kepribadian dan cinta Anda</p>
+</div>
+
+<div class="themes-container">
+
+  <!-- ELEGANT ROSE -->
+  <div class="theme-section" id="elegant-rose">
+    <div class="theme-section-header">
+      <div class="ts-title">🌹 Elegant Rose</div>
+      <div class="ts-badge">Standard & Premium</div>
+    </div>
+    <div class="theme-demo">
+      <div class="mockup-frame">
+        <div class="mockup-bar">
+          <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+        </div>
+        <div class="mockup-content theme-rose">
+          <div class="mock-cover">
+            <div class="mock-rose-deco">🌹</div>
+            <div class="mock-couple">
+              Rahma Aulia
+              <span class="mock-and">&amp;</span>
+              Budi Santoso
+            </div>
+            <div class="mock-date">SABTU, 14 FEBRUARI 2025</div>
+          </div>
+          <div class="mock-body">
+            <div class="mock-info">
+              <div class="mock-info-box">
+                <div class="mock-info-icon">📅</div>
+                <div class="mock-info-label">Akad Nikah</div>
+              </div>
+              <div class="mock-info-box">
+                <div class="mock-info-icon">🎊</div>
+                <div class="mock-info-label">Resepsi</div>
+              </div>
+              <div class="mock-info-box">
+                <div class="mock-info-icon">📍</div>
+                <div class="mock-info-label">Lokasi</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="theme-details">
+        <h2>Elegant Rose</h2>
+        <p class="theme-tagline">"Seanggun mawar, seindah cinta."</p>
+        <ul class="theme-features-list">
+          <li class="tfl-item"><span class="tfl-check">✓</span>Warna dominan soft pink & rose gold</li>
+          <li class="tfl-item"><span class="tfl-check">✓</span>Dekorasi bunga mawar animasi</li>
+          <li class="tfl-item"><span class="tfl-check">✓</span>Font serif elegan Cormorant Garamond</li>
+          <li class="tfl-item"><span class="tfl-check">✓</span>Galeri foto dengan efek hover romantis</li>
+          <li class="tfl-item"><span class="tfl-check">✓</span>Countdown timer animasi</li>
+          <li class="tfl-item"><span class="tfl-check">✓</span>Kotak ucapan tamu</li>
+        </ul>
+        <div class="theme-packages">
+          <div class="tp-badge">Basic</div>
+          <div class="tp-badge active">Standard</div>
+          <div class="tp-badge active">Premium</div>
+        </div>
+        <button class="order-btn" onclick="orderTheme('Elegant Rose', 'Rp199.000')">Pesan Tema Ini</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GARDEN GREEN -->
+  <div class="theme-section" id="garden-green">
+    <div class="theme-section-header">
+      <div class="ts-title">🌿 Garden Green</div>
+      <div class="ts-badge">Standard & Premium</div>
+    </div>
+    <div class="theme-demo">
+      <div class="mockup-frame">
+        <div class="mockup-bar">
+          <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+        </div>
+        <div class="mockup-content theme-green">
+          <div class="mock-cover">
+            <div class="mock-rose-deco">🌿</div>
+            <div class="mock-couple">
+              Sari Dewi
+              <span class="mock-and">&amp;</span>
+              Dani Pratama
+            </div>
+            <div class="mock-date">MINGGU, 20 APRIL 2025</div>
+          </div>
+          <div class="mock-body" style="background:linear-gradient(to bottom, #f0f8f0, #e8f5e8)">
+            <div class="mock-info">
+              <div class="mock-info-box" style="border-color:#b8e0a8">
+                <div class="mock-info-icon">📅</div>
+                <div class="mock-info-label" style="color:#4a8040">Akad Nikah</div>
+              </div>
+              <div class="mock-info-box" style="border-color:#b8e0a8">
+                <div class="mock-info-icon">🎊</div>
+                <div class="mock-info-label" style="color:#4a8040">Resepsi</div>
+              </div>
+              <div class="mock-info-box" style="border-color:#b8e0a8">
+                <div class="mock-info-icon">📍</div>
+                <div class="mock-info-label" style="color:#4a8040">Lokasi</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="theme-details">
+        <h2>Garden Green</h2>
+        <p class="theme-tagline">"Segar, alami, dan penuh kehidupan baru."</p>
+        <ul class="theme-features-list">
+          <li class="tfl-item"><span class="tfl-check">✓</span>Palet warna hijau sage & eucalyptus</li>
+          <li class="tfl-item"><span class="tfl-check">✓</span>Dekorasi daun hijau & bunga liar</li>
+          <li class="tfl-item"><span class="tfl-check">✓</span>Nuansa garden wedding outdoor</li>
+          <li class="tfl-item"><span class="tfl-check">✓</span>Galeri foto tematik alam</li>
+          <li class="tfl-item"><span class="tfl-check">✓</span>Countdown timer</li>
+          <li class="tfl-item"><span class="tfl-check">✓</span>Info lokasi & maps</li>
+        </ul>
+        <div class="theme-packages">
+          <div class="tp-badge">Basic</div>
+          <div class="tp-badge active">Standard</div>
+          <div class="tp-badge active">Premium</div>
+        </div>
+        <button class="order-btn" onclick="orderTheme('Garden Green', 'Rp199.000')">Pesan Tema Ini</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROYAL GOLD -->
+  <div class="theme-section" id="royal-gold">
+    <div class="theme-section-header">
+      <div class="ts-title">✨ Royal Gold</div>
+      <div class="ts-badge">Premium Only</div>
+    </div>
+    <div class="theme-demo">
+      <div class="mockup-frame">
+        <div class="mockup-bar" style="background:#2d2218">
+          <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+        </div>
+        <div class="mockup-content theme-gold-bg">
+          <div class="mock-cover">
+            <div class="mock-rose-deco">✨</div>
+            <div class="mock-couple" style="font-family:'Cormorant Garamond',serif; font-size:1.6rem; font-style:italic; color:#e8d5b0; text-align:center">
+              Layla Putri
+              <span class="mock-and" style="color:#c9a96e; font-size:0.9rem; display:block">&amp;</span>
+              Arif Rahman
+            </div>
+            <div class="mock-date" style="color:rgba(201,169,110,0.7); font-size:0.7rem; margin-top:0.5rem; letter-spacing:0.2em">SABTU, 5 MARET 2025</div>
+          </div>
+          <div class="mock-body" style="background:#100e0a">
+            <div class="mock-info">
+              <div class="mock-info-box" style="background:#1a1410; border-color:rgba(201,169,110,0.2)">
+                <div class="mock-info-icon">📅</div>
+                <div class="mock-info-label" style="color:#c9a96e">Akad Nikah</div>
+              </div>
+              <div class="mock-info-box" style="background:#1a1410; border-color:rgba(201,169,110,0.2)">
+                <div class="mock-info-icon">🎊</div>
+                <div class="mock-info-label" style="color:#c9a96e">Resepsi</div>
+              </div>
+              <div class="mock-info-box" style="background:#1a1410; border-color:rgba(201,169,110,0.2)">
+                <div class="mock-info-icon">📍</div>
+                <div class="mock-info-label" style="color:#c9a96e">Lokasi</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="theme-details">
+        <h2>Royal Gold</h2>
+        <p class="theme-tagline">"Mewah, agung, dan tak terlupakan."</p>
+        <ul class="theme-features-list">
+          <li class="tfl-item"><span class="tfl-check">✓</span>Latar hitam & aksen emas mewah</li>
+          <li class="tfl-item"><span class="tfl-check">✓</span>Animasi partikel emas berkilau</li>
+          <li class="tfl-item"><span class="tfl-check">✓</span>Typography premium serif gold</li>
+          <li class="tfl-item"><span class="tfl-check">✓</span>Opening animation eksklusif</li>
+          <li class="tfl-item"><span class="tfl-check">✓</span>Galeri foto dengan bingkai emas</li>
+          <li class="tfl-item"><span class="tfl-check">✓</span>Semua fitur Premium termasuk</li>
+        </ul>
+        <div class="theme-packages">
+          <div class="tp-badge">Basic</div>
+          <div class="tp-badge">Standard</div>
+          <div class="tp-badge active">Premium</div>
+        </div>
+        <button class="order-btn" onclick="orderTheme('Royal Gold', 'Rp349.000')">Pesan Tema Ini</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MINIMALIST WHITE -->
+  <div class="theme-section" id="minimalist-white">
+    <div class="theme-section-header">
+      <div class="ts-title">🤍 Minimalist White</div>
+      <div class="ts-badge">Semua Paket</div>
+    </div>
+    <div class="theme-demo">
+      <div class="mockup-frame">
+        <div class="mockup-bar">
+          <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+        </div>
+        <div class="mockup-content theme-minimal">
+          <div class="mock-cover" style="border-bottom:1px solid #ebebeb">
+            <div class="mock-rose-deco" style="font-size:2.5rem; opacity:0.3">◇</div>
+            <div class="mock-couple" style="font-family:'Cormorant Garamond',serif; font-size:1.6rem; font-style:italic; color:#1a1a1a; text-align:center; font-weight:300">
+              Anisa & Riko
+              <span class="mock-and" style="color:#888; font-size:0.8rem; display:block; margin:0.3rem 0">——— ♡ ———</span>
+            </div>
+            <div class="mock-date" style="color:#aaa; font-size:0.7rem; margin-top:0.5rem; letter-spacing:0.2em">15 JUNI 2025</div>
+          </div>
+          <div class="mock-body" style="background:#fafafa">
+            <div class="mock-info">
+              <div class="mock-info-box" style="border-color:#ebebeb">
+                <div class="mock-info-icon" style="opacity:0.5">📅</div>
+                <div class="mock-info-label" style="color:#999">Akad Nikah</div>
+              </div>
+              <div class="mock-info-box" style="border-color:#ebebeb">
+                <div class="mock-info-icon" style="opacity:0.5">🎊</div>
+                <div class="mock-info-label" style="color:#999">Resepsi</div>
+              </div>
+              <div class="mock-info-box" style="border-color:#ebebeb">
+                <div class="mock-info-icon" style="opacity:0.5">📍</div>
+                <div class="mock-info-label" style="color:#999">Lokasi</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="theme-details">
+        <h2>Minimalist White</h2>
+        <p class="theme-tagline">"Kesederhanaan adalah kemewahan sejati."</p>
+        <ul class="theme-features-list">
+          <li class="tfl-item"><span class="tfl-check">✓</span>Desain bersih putih & abu elegan</li>
+          <li class="tfl-item"><span class="tfl-check">✓</span>Tipografi modern & minimalis</li>
+          <li class="tfl-item"><span class="tfl-check">✓</span>Cocok untuk semua tema pernikahan</li>
+          <li class="tfl-item"><span class="tfl-check">✓</span>Loading super cepat</li>
+          <li class="tfl-item"><span class="tfl-check">✓</span>Tersedia untuk semua paket</li>
+        </ul>
+        <div class="theme-packages">
+          <div class="tp-badge active">Basic</div>
+          <div class="tp-badge active">Standard</div>
+          <div class="tp-badge active">Premium</div>
+        </div>
+        <button class="order-btn" onclick="orderTheme('Minimalist White', 'Rp99.000')">Pesan Tema Ini</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RUSTIC WOOD -->
+  <div class="theme-section" id="rustic-wood">
+    <div class="theme-section-header">
+      <div class="ts-title">🪵 Rustic Wood</div>
+      <div class="ts-badge">Standard & Premium</div>
+    </div>
+    <div class="theme-demo">
+      <div class="mockup-frame">
+        <div class="mockup-bar" style="background:#4a2e18">
+          <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+        </div>
+        <div class="mockup-content theme-rustic">
+          <div class="mock-cover">
+            <div class="mock-rose-deco">🪵</div>
+            <div class="mock-couple" style="font-family:'Cormorant Garamond',serif; font-size:1.6rem; font-style:italic; color:#f0d8b0; text-align:center">
+              Maya & Bayu
+              <span class="mock-and" style="color:#c9a96e; font-size:0.9rem; display:block">&amp;</span>
+            </div>
+            <div class="mock-date" style="color:rgba(240,216,176,0.7); font-size:0.7rem; margin-top:0.5rem; letter-spacing:0.2em">SABTU, 12 JULI 2025</div>
+          </div>
+          <div class="mock-body" style="background:#3d2410">
+            <div class="mock-info">
+              <div class="mock-info-box" style="background:#4a2e18; border-color:rgba(201,169,110,0.2)">
+                <div class="mock-info-icon">📅</div>
+                <div class="mock-info-label" style="color:#c9a96e">Akad Nikah</div>
+              </div>
+              <div class="mock-info-box" style="background:#4a2e18; border-color:rgba(201,169,110,0.2)">
+                <div class="mock-info-icon">🎊</div>
+                <div class="mock-info-label" style="color:#c9a96e">Resepsi</div>
+              </div>
+              <div class="mock-info-box" style="background:#4a2e18; border-color:rgba(201,169,110,0.2)">
+                <div class="mock-info-icon">📍</div>
+                <div class="mock-info-label" style="color:#c9a96e">Lokasi</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="theme-details">
+        <h2>Rustic Wood</h2>
+        <p class="theme-tagline">"Hangat, alami, dan bernuansa vintage."</p>
+        <ul class="theme-features-list">
+          <li class="tfl-item"><span class="tfl-check">✓</span>Palet coklat kayu & emas vintage</li>
+          <li class="tfl-item"><span class="tfl-check">✓</span>Tekstur kayu & ornamen boho</li>
+          <li class="tfl-item"><span class="tfl-check">✓</span>Nuansa pernikahan outdoor & barn</li>
+          <li class="tfl-item"><span class="tfl-check">✓</span>Galeri foto dengan bingkai vintage</li>
+          <li class="tfl-item"><span class="tfl-check">✓</span>Info lokasi & maps</li>
+        </ul>
+        <div class="theme-packages">
+          <div class="tp-badge">Basic</div>
+          <div class="tp-badge active">Standard</div>
+          <div class="tp-badge active">Premium</div>
+        </div>
+        <button class="order-btn" onclick="orderTheme('Rustic Wood', 'Rp199.000')">Pesan Tema Ini</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div style="text-align:center; padding: 2rem 4rem 4rem; border-top: 1px solid var(--warm);">
+  <p style="color:var(--gray); font-size:0.85rem; margin-bottom:1rem">Ada tema lain yang diinginkan? Konsultasikan dengan kami!</p>
+  <a href="https://wa.me/6282388308450?text=Halo%20Invitify!%20Saya%20ingin%20konsultasi%20tema%20undangan%20digital." target="_blank" class="order-btn">💬 Konsultasi via WhatsApp</a>
+</div>
+
+<script>
+function orderTheme(theme, price) {
+  const msg = `Halo Invitify! 👋\n\nSaya tertarik dengan tema *${theme}* (${price}).\n\nBisa info lebih lanjut mengenai:\n1. Proses pemesanan\n2. Metode pembayaran\n3. Estimasi pengerjaan\n\nTerima kasih! 🙏`;
+  window.open(`https://wa.me/6282388308450?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+// Smooth scroll to hash
+if (window.location.hash) {
+  setTimeout(() => {
+    const el = document.querySelector(window.location.hash);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }, 100);
+}
+</script>
+</body>
+</html>

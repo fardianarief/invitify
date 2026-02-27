@@ -1,0 +1,38 @@
+{
+  "passkeys": {
+    "RAHMA2024": {
+      "customer": "Rahma & Budi",
+      "theme": "elegant-rose",
+      "package": "Premium",
+      "created": "2024-01-15",
+      "active": true
+    },
+    "SARI2024": {
+      "customer": "Sari & Dani",
+      "theme": "garden-green",
+      "package": "Standard",
+      "created": "2024-01-20",
+      "active": true
+    },
+    "DEMO2024": {
+      "customer": "Demo Customer",
+      "theme": "royal-gold",
+      "package": "Basic",
+      "created": "2024-01-01",
+      "active": true
+    }
+  },
+  "_instructions": {
+    "how_to_add": "Tambahkan entry baru di dalam 'passkeys' dengan format yang sama",
+    "format": {
+      "PASSKEY_BARU": {
+        "customer": "Nama Customer",
+        "theme": "nama-tema",
+        "package": "Basic/Standard/Premium",
+        "created": "YYYY-MM-DD",
+        "active": true
+      }
+    },
+    "available_themes": ["elegant-rose", "garden-green", "royal-gold", "minimalist-white", "rustic-wood"]
+  }
+}
